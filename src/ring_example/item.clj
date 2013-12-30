@@ -1,28 +1,28 @@
 (ns ring-example.item
   (use ring-example.database  clojure.tools.logging)
-  (require [clojure.java.jdbc :as jdbc]
-           [java-jdbc.sql :as sql])
+  (require [clojure.java.jdbc :refer [insert! query update! delete!]]
+           [java-jdbc.sql :refer [select where]])
   (import java.util.Date))
 
 (defn all [request]
-            (jdbc/query pooled-db-spec (sql/select * :items)))
+            (query pooled-db-spec (select * :items)))
 
 (defn create(
       [attributes]
       (def content (merge {"duedate" (new Date) "itemtext" "default text"} (select-keys attributes ["itemtext" "duedate"])))
-      (jdbc/insert! pooled-db-spec :items content)))
+      (insert! pooled-db-spec :items content)))
 
 (defn get-item
-      [item-id]
-      (jdbc/query pooled-db-spec
-      (sql/select * :items (sql/where {:id item-id} ))))
+  [item-id]
+  (query pooled-db-spec
+    (select * :items (where {:id item-id} ))))
 
 (defn update(
               [item-id attributes]
-              (jdbc/update! pooled-db-spec
+              (update! pooled-db-spec
                   :items (select-keys attributes ["itemtext" "duedate"]) ["id = ?" item-id] ) ))
 
 
-(defn delete([item-id] (jdbc/delete! pooled-db-spec
-                            :items (sql/where {:id item-id} ))))
+(defn delete([item-id] (delete! pooled-db-spec
+                            :items (where {:id item-id} ))))
 
