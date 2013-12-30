@@ -9,7 +9,7 @@
                  [ring/ring-json "0.2.0"] ;; REST json middleware
                  [ring/ring-jetty-adapter "1.2.1"] ;; use Jetty to run the services
                  [compojure "1.1.6"]  ;; Routing
-                 [org.clojure/java.jdbc "0.3.0-beta2"] ;; jdbc
+                 [org.clojure/java.jdbc "0.3.0"] ;; jdbc
                  [java-jdbc/dsl "0.1.0"] ;; jdbc dsl
                  [com.jolbox/bonecp "0.8.0.RELEASE"] ;; connection pooling
                  ;;[com.h2database/h2 "1.3.174"] ;; database (driver)
